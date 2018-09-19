@@ -27,7 +27,7 @@ public class TrafficLight {
     }
 
     /**
-     *
+     * Check color using condition
      * @return color traffic light in deteminated minute
      */
     public String getLight() {
