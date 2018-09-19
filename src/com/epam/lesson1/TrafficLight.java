@@ -10,6 +10,11 @@ package com.epam.lesson1;
 public class TrafficLight {
     private int light;
 
+    /**
+     * @param x need more than zero
+     * @throws IllegalArgumentException
+     *         if x is less then 0
+     */
     public void setLight(int x) {
         if (x < 0) {
             throw new IllegalArgumentException("Number is not less then 0");
@@ -21,6 +26,10 @@ public class TrafficLight {
         setLight(x);
     }
 
+    /**
+     *
+     * @return color traffic light in deteminated minute
+     */
     public String getLight() {
         if (light == 0 || light == 1) {
             return "Red";
