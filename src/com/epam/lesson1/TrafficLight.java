@@ -17,7 +17,7 @@ public class TrafficLight {
      */
     public void setLight(int x) {
         if (x < 0) {
-            throw new IllegalArgumentException("Number is not less then 0");
+            throw new IllegalArgumentException("Number must is not less then 0");
         }
         this.light = x % 10;
     }
