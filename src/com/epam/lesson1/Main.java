@@ -13,14 +13,13 @@ import java.io.InputStreamReader;
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) {
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int x = Integer.parseInt(reader.readLine());
             TrafficLight trafficLight = new TrafficLight(x);
             System.out.println(trafficLight.getLight());
-        } catch (NumberFormatException ex) {
-            System.out.println("Not a number");
+        } catch (NumberFormatException | IOException e) {
+            System.err.println("Not a number");
         }
     }
 }
