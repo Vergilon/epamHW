@@ -1,6 +1,5 @@
 package com.epam.lesson2;
 
-
 /**
  * StringTask description.
  *
