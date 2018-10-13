@@ -2,39 +2,43 @@ package com.epam.lesson1;
 
 /**
  * Simulation traffic light signal for a determined minute
+ * Rule traffic light:
+ * first 2 minutes - red light
+ * after 3 minutes - yellow light
+ * after 5 minutes - green light
  *
  * @author Roman Moderatov
  * @version 1.0
  * @since 1.8
  */
 public class TrafficLight {
-    private int light;
+    private int timePerMinutes;
 
     /**
-     * @param x need more than zero
-     * @throws IllegalArgumentException
-     *         if x is less then 0
+     * @param timePerMinutes need more than zero
+     * @throws IllegalArgumentException if x is less then 0
      */
-    public void setLight(int x) {
-        if (x < 0) {
-            throw new IllegalArgumentException("Number must is not less then 0");
+    public void setLight(int timePerMinutes) {
+        if (timePerMinutes < 0) {
+            throw new IllegalArgumentException("Number must be positive");
         }
-        this.light = x % 10;
-    }
-
-    public TrafficLight(int x) {
-        setLight(x);
+        this.timePerMinutes = timePerMinutes % 10;
     }
 
     /**
      * Check color using condition
-     * @return color traffic light in deteminated minute
+     *
+     * @return color traffic light in determined minute
      */
     public String getLight() {
-        if (light == 0 || light == 1) {
+        if (timePerMinutes == 0 || timePerMinutes == 1) {
             return "Red";
         }
-        return light <= 4 ? "Yellow" : "Green";
+        return timePerMinutes <= 4 ? "Yellow" : "Green";
+    }
+
+    public TrafficLight(int timePerMinutes) {
+        setLight(timePerMinutes);
     }
 }
 
