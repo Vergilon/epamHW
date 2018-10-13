@@ -10,6 +10,17 @@ package com.epam.lesson3;
 public class CharMatrix {
     private char[][] charMatrix;
 
+    public char[][] getCharMatrix() {
+        return charMatrix;
+    }
+
+    public void setCharMatrix(char[][] charMatrix) {
+        this.charMatrix = charMatrix;
+    }
+
+    /**
+     * Defualt test constructor
+     */
     public CharMatrix() {
         charMatrix = new char[][]{
                 {'+', '*', '0', '*', '+'},
@@ -19,6 +30,16 @@ public class CharMatrix {
                 {'-', '*', '0', '*', '-'}
         };
     }
+
+    /**
+     * User constructor
+     *
+     * @param newMatrix set charMatrix
+     */
+    public CharMatrix(char[][] newMatrix) {
+        charMatrix = newMatrix;
+    }
+
 
     /**
      * Check number parity
