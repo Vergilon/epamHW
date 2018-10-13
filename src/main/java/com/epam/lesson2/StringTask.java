@@ -44,11 +44,11 @@ public class StringTask {
     /**
      * 9.15
      *
-     * @param x string index
+     * @param kthChar string index
      * @return x(th) string character
      */
-    public char getKthChar(int x) {
-        return stringTask.charAt(x - 1);
+    public char getKthChar(int kthChar) {
+        return stringTask.charAt(kthChar - 1);
     }
 
     /**
@@ -86,4 +86,5 @@ public class StringTask {
     public String reverseString() {
         return new StringBuilder(stringTask).reverse().toString();
     }
+
 }
