@@ -40,7 +40,6 @@ public class CharMatrix {
         charMatrix = newMatrix;
     }
 
-
     /**
      * Check number parity
      * Method is private, because it work only in method this class
