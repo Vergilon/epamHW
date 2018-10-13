@@ -58,9 +58,7 @@ public class CharMatrix {
      * @return string according to the rules
      */
     public String getLimitString(int rowNumber, int startChar, int endChar) {
-        String s = "";
-        s = s.copyValueOf(charMatrix[rowNumber], startChar, endChar - startChar);
-        return s;
+        return new String(String.copyValueOf(charMatrix[rowNumber], startChar, endChar - startChar));
     }
 
     /**
