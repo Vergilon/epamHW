@@ -11,7 +11,14 @@ import org.junit.Test;
  * @since 1.8
  */
 public class CharMatrixTest {
-    CharMatrix cm = new CharMatrix();
+    char[][] test = new char[][]{
+        {'+', '*', '0', '*', '+'},
+        {'*', '0', '*', '0', '*'},
+        {'0', '*', '0', '*', '0'},
+        {'*', '0', '*', '0', '*'},
+        {'-', '*', '0', '*', '-'}
+    };
+    CharMatrix cm = new CharMatrix(test);
 
     @Test
     public void getEdgeStringTest() {
