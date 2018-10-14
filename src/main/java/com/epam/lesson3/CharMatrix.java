@@ -19,19 +19,6 @@ public class CharMatrix {
     }
 
     /**
-     * Defualt test constructor
-     */
-    public CharMatrix() {
-        charMatrix = new char[][]{
-                {'+', '*', '0', '*', '+'},
-                {'*', '0', '*', '0', '*'},
-                {'0', '*', '0', '*', '0'},
-                {'*', '0', '*', '0', '*'},
-                {'-', '*', '0', '*', '-'}
-        };
-    }
-
-    /**
      * User constructor
      *
      * @param newMatrix set charMatrix
