@@ -18,8 +18,7 @@ public class StringTask {
         this.stringTask = stringTask;
     }
 
-    public StringTask(String string)
-    {
+    public StringTask(String string) {
         setStringTask(string);
     }
 
@@ -80,7 +79,6 @@ public class StringTask {
     }
 
     /**
-     *
      * @return reverse string
      */
     public String reverseString() {
