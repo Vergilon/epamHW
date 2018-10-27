@@ -9,6 +9,10 @@ import java.math.BigDecimal;
 
 /**
  * Test for {@link Client}
+ *
+ * @author Roman Moderatov
+ * @version 1.0
+ * @since 1.8
  */
 public class ClientTest {
     @Before
