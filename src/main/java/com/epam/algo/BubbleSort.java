@@ -1,7 +1,18 @@
 package com.epam.algo;
 
+/**
+ * Implementation of array sorting by swap method (bubblesort)
+ *
+ * @author Roman Moderatov
+ * @version 1.0
+ * @since 1.8
+ */
 public class BubbleSort {
 
+    /**
+     * Method sort array using swap compare element by element
+     * @param arr input array
+     */
     private void bubbleSort(int arr[]) {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {

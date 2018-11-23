@@ -4,8 +4,25 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Implementation of searching element in array using binary search
+ *
+ * @author Roman Moderatov
+ * @version 1.0
+ * @since 1.8
+ */
 public class BinarySearch {
 
+    /**
+     * This is method that searches for an element in an array.
+     * It divides the array in the middle and determines in which
+     * of the parts the necessary element is hypothetically locate.
+     * @param arr array where this method search element
+     * @param firstElement first index of array
+     * @param lastElement last index of array
+     * @param searchElement
+     * @return
+     */
     private int binarySearch(int arr[], int firstElement, int lastElement, int searchElement) {
         if (lastElement >= firstElement) {
             int middleElement = firstElement + (lastElement - firstElement) / 2;

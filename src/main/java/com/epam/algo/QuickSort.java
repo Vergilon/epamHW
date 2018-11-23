@@ -1,7 +1,20 @@
 package com.epam.algo;
 
+/**
+ * Implementation of array sorting by quicksort method
+ *
+ * @author Roman Moderatov
+ * @version 1.0
+ * @since 1.8
+ */
 public class QuickSort {
 
+    /**
+     * Divide and sort part of array relative pivot
+     * @param arr input array
+     * @param low minimal index in input array
+     * @param high maximal index in input array
+     */
     private void quickSort(int arr[], int low, int high) {
         if (low < high) {
             int div = divide(arr, low, high);
@@ -10,6 +23,13 @@ public class QuickSort {
         }
     }
 
+    /**
+     * Pick last element as pivot
+     * @param arr input array
+     * @param low minimal index in input array
+     * @param high maximal index in input array
+     * @return pivot element
+     */
     private int divide(int arr[], int low, int high) {
         int point = arr[high];
         int i = (low - 1);

@@ -3,8 +3,19 @@ package com.epam.algo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of array sorting by radixsort (LSD) method
+ *
+ * @author Roman Moderatov
+ * @version 1.0
+ * @since 1.8
+ */
 public class RadixSort {
 
+    /**
+     * This method sorts an array comparing the individual digits
+     * @param input not sorted array
+     */
     private void radixSort(int[] input) {
 
         List<Integer>[] buckets = new ArrayList[10];
