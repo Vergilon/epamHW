@@ -47,7 +47,7 @@ public class Gamer {
         shot(x, y);
     }
 
-    private void shot(int litera, int number) {
+    void shot(int litera, int number) {
 
         if (!isDamage(litera, number)) {
             mes = "Miss";
@@ -78,7 +78,7 @@ public class Gamer {
         return mes.equals("Kill") && !isRepeat(x, y);
     }
 
-    private boolean isRepeat(int a, int b) {
+    boolean isRepeat(int a, int b) {
         return (getBoard().getNinjaBoard()[a][b] == 'O' || getBoard().getNinjaBoard()[a][b] == '✖' || getBoard().getNinjaBoard()[a][b] == '❎');
     }
 

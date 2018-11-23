@@ -4,57 +4,78 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static Gamer firstGamer;
-    private static Gamer secondGamer;
+    private static Computer firstGamer;
+    private static Computer secondGamer;
+
+    private static void stepPlayer(Computer g) {
+        boolean flag = true;
+        while (flag && !g.isWin()) {
+            Scanner in = new Scanner(System.in);
+            System.out.println("Player: " + g.getName());
+            g.getBoard().showNinjaBoard();
+            System.out.println("Attack in: ");
+            String s = in.nextLine();
+            g.readShot(s);
+            int c = g.convertChar(s.charAt(0));
+            int i = Integer.parseInt(s.substring(1));
+            if (!(g.isDamage(c, i) || g.isKill(c, i))) {
+                flag = false;
+            }
+        }
+    }
+
+    private static void stepComp(Computer g) {
+        boolean flag = true;
+        while (flag && !g.isWin()) {
+            System.out.println("Player: " + g.getName());
+            g.getBoard().showNinjaBoard();
+            System.out.println("Attack in: ");
+            g.autoShot();
+            System.out.println(g.getX() + " " + g.getY());
+            int c = g.getX();
+            int i = g.getY();
+            if (!(g.isDamage(c, i) || g.isKill(c, i))) {
+                flag = false;
+            }
+        }
+    }
 
     public static void main(String[] args) {
+        int h = 4;
+
         System.out.println("Battle Ship");
         Scanner in = new Scanner(System.in);
         System.out.print("Give names first player: ");
-        firstGamer = new Gamer(in.nextLine());
+        firstGamer = new Computer(in.nextLine());
         System.out.println(" ");
         System.out.print("Give names second player: ");
-        secondGamer = new Gamer(in.nextLine());
+        secondGamer = new Computer(in.nextLine());
         System.out.println(" ");
-        int h = 4;
-
-        while (!firstGamer.isWin() && !secondGamer.isWin()) {
-            if (h % 2 == 0) {
-                boolean flag = true;
-                while (flag && !firstGamer.isWin()) {
-                    System.out.println("Player: " + firstGamer.getName());
-                    firstGamer.getBoard().showNinjaBoard();
-                    System.out.println("Attack in: ");
-                    String s = in.nextLine();
-                    firstGamer.readShot(s);
-                    int c = firstGamer.convertChar(s.charAt(0));
-                    int i = Integer.parseInt(s.substring(1));
-                    System.out.println(!firstGamer.isDamage(c, i));
-                    System.out.println(!firstGamer.isKill(c, i));
-                    if (!(firstGamer.isDamage(c, i) || firstGamer.isKill(c, i))) {
-                        flag = false;
-                    }
+        System.out.println("Second player is computer: y/n");
+        if (in.nextLine().equals("n")) {
+            while (!firstGamer.isWin() && !secondGamer.isWin()) {
+                if (h % 2 == 0) {
+                    stepPlayer(firstGamer);
+                    h++;
+                } else {
+                    stepPlayer(secondGamer);
+                    h++;
                 }
-                h++;
-            } else {
-                boolean flag = true;
-                while (flag && !secondGamer.isWin()) {
-                    System.out.println("Player: " + secondGamer.getName());
-                    secondGamer.getBoard().showNinjaBoard();
-                    System.out.println("Attack in: ");
-                    String s = in.nextLine();
-                    secondGamer.readShot(s);
-                    int c = secondGamer.convertChar(s.charAt(0));
-                    int i = Integer.parseInt(s.substring(1));
-                    System.out.println(!secondGamer.isDamage(c, i));
-                    System.out.println(!secondGamer.isKill(c, i));
-                    if (!(secondGamer.isDamage(c, i) || secondGamer.isKill(c, i))) {
-                        flag = false;
-                    }
-                }
-                h++;
             }
+            System.out.println(" ");
+        } else {
+            while (!firstGamer.isWin() && !secondGamer.isWin()) {
+                if (h % 2 == 0) {
+                    stepPlayer(firstGamer);
+                    h++;
+                } else {
+                    stepComp(secondGamer);
+                    h++;
+                }
+            }
+            System.out.println(" ");
         }
-        System.out.println(" ");
+
+
     }
 }
