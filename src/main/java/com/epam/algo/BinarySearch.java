@@ -6,9 +6,8 @@ import java.io.IOException;
 
 public class BinarySearch {
 
-    private int binarySearch(int arr[], int firstElement, int lastElement, int searchElement)
-    {
-        if (lastElement>=firstElement) {
+    private int binarySearch(int arr[], int firstElement, int lastElement, int searchElement) {
+        if (lastElement >= firstElement) {
             int middleElement = firstElement + (lastElement - firstElement) / 2;
 
             if (arr[middleElement] == searchElement) {
@@ -25,7 +24,7 @@ public class BinarySearch {
     }
 
     public static void main(String[] args) {
-        try(BufferedReader reader = new BufferedReader(new FileReader("src.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src.txt"))) {
 
             String str = reader.readLine();
             String[] str1 = str.split(" ");
