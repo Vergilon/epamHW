@@ -1,9 +1,10 @@
 package com.epam.BattleShip;
 
-public class Computer extends Gamer {
+public class Computer extends Player {
 
     private int x;
     private int y;
+    private DifficultStrategy dif;
 
     public int getX() {
         return x;
@@ -21,23 +22,13 @@ public class Computer extends Gamer {
         this.y = y;
     }
 
-    Computer(String name) {
+    Computer(String name, DifficultStrategy dif) {
         super(name);
-        setX(0);
-        setY(0);
+        this.dif = dif;
 
     }
 
-    void autoShot() {
-        setX(getBoard().getRandomNumberInRange(1, 11));
-        setY(getBoard().getRandomNumberInRange(1, 11));
-
-        if (!isRepeat(getX(), getY())) {
-            shot(getX(), getY());
-            if (isDamage(getX(), getY()) || isKill(getX(), getY())) {
-                autoShot();
-            }
-        }
-
+    boolean computerShot() {
+        return dif.shot(this);
     }
 }

@@ -2,80 +2,112 @@ package com.epam.BattleShip;
 
 import java.util.Scanner;
 
+/**
+ * Game is the main class, which collects all the necessary elements
+ * to activate the game of sea battle.
+ *
+ * @author Roman Moderatov
+ * @version 1.0
+ * @since 1.8
+ */
 public class Game {
+    static Scanner in = new Scanner(System.in);
 
-    private static Computer firstGamer;
-    private static Computer secondGamer;
+    /**
+     * This method activate game for real player
+     *
+     * @param g is object class Gamer
+     */
+    private static void stepPlayer(Gamer g) {
 
-    private static void stepPlayer(Computer g) {
-        boolean flag = true;
-        while (flag && !g.isWin()) {
-            Scanner in = new Scanner(System.in);
+        while (!g.isWin()) {
             System.out.println("Player: " + g.getName());
             g.getBoard().showNinjaBoard();
             System.out.println("Attack in: ");
             String s = in.nextLine();
-            g.readShot(s);
-            int c = g.convertChar(s.charAt(0));
-            int i = Integer.parseInt(s.substring(1));
-            if (!(g.isDamage(c, i) || g.isKill(c, i))) {
-                flag = false;
+            if (g.shot(g.readShot(s))) {
+                stepPlayer(g);
+                break;
+            } else {
+                break;
             }
         }
     }
 
+    /**
+     * This method activate game for computer player
+     *
+     * @param g is object class Computer
+     */
     private static void stepComp(Computer g) {
-        boolean flag = true;
-        while (flag && !g.isWin()) {
+        while (!g.isWin()) {
             System.out.println("Player: " + g.getName());
             g.getBoard().showNinjaBoard();
             System.out.println("Attack in: ");
-            g.autoShot();
-            System.out.println(g.getX() + " " + g.getY());
-            int c = g.getX();
-            int i = g.getY();
-            if (!(g.isDamage(c, i) || g.isKill(c, i))) {
-                flag = false;
+            if (g.computerShot()) {
+                stepComp(g);
+                break;
+            } else {
+                break;
             }
         }
     }
 
+    /**
+     * Main working method.
+     *
+     * @param args for working in console (for example cmd)
+     */
     public static void main(String[] args) {
-        int h = 4;
+        int h = 2;
 
         System.out.println("Battle Ship");
-        Scanner in = new Scanner(System.in);
-        System.out.print("Give names first player: ");
-        firstGamer = new Computer(in.nextLine());
-        System.out.println(" ");
-        System.out.print("Give names second player: ");
-        secondGamer = new Computer(in.nextLine());
-        System.out.println(" ");
-        System.out.println("Second player is computer: y/n");
-        if (in.nextLine().equals("n")) {
-            while (!firstGamer.isWin() && !secondGamer.isWin()) {
+        System.out.print("Select game mode: HUMAN vs HUMAN (hh) or HUMAN vs COMPUTER (hc): ");
+        String s = in.nextLine();
+        if (s.equals("hh")) {
+            System.out.println(" ");
+            System.out.print("Name of the first player: ");
+            Gamer firstPlayer = new Gamer(in.nextLine());
+            System.out.print("Name of the second player: ");
+            Gamer secondPlayer = new Gamer(in.nextLine());
+            System.out.println(" ");
+            while (!firstPlayer.isWin() && !secondPlayer.isWin()) {
+                System.out.println("Step " + (h - 2));
                 if (h % 2 == 0) {
-                    stepPlayer(firstGamer);
+                    stepPlayer(firstPlayer);
                     h++;
                 } else {
-                    stepPlayer(secondGamer);
+                    stepPlayer(secondPlayer);
                     h++;
                 }
             }
+        } else if (s.equals("hc")) {
             System.out.println(" ");
+            System.out.print("Name of the first player: ");
+            Gamer player = new Gamer(in.nextLine());
+            System.out.println(" ");
+            System.out.println("Chose difficult: easy or normal?");
+            DifficultStrategy dif;
+            String d = in.nextLine();
+            if (d.equals("easy")) {
+                dif = new EasyDifficult();
+            } else if (d.equals("normal")) {
+                dif = new HumanDifficult();
+            } else {
+                throw new IllegalArgumentException();
+            }
+            Computer computer = new Computer("Computer", dif);
+            while (!player.isWin() && !computer.isWin()) {
+                if (h % 2 == 0) {
+                    stepPlayer(player);
+                    h++;
+                } else {
+                    stepComp(computer);
+                    h++;
+                }
+            }
         } else {
-            while (!firstGamer.isWin() && !secondGamer.isWin()) {
-                if (h % 2 == 0) {
-                    stepPlayer(firstGamer);
-                    h++;
-                } else {
-                    stepComp(secondGamer);
-                    h++;
-                }
-            }
-            System.out.println(" ");
+            throw new IllegalArgumentException();
         }
-
-
     }
 }

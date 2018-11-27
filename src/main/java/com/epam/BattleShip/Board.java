@@ -1,11 +1,21 @@
 package com.epam.BattleShip;
 
+import java.util.Arrays;
 import java.util.Random;
 
-public class Board {
+class Board {
 
     private int[][] insideBoard = new int[12][12];
     private char[][] ninjaBoard = new char[12][12];
+    private int[][] stabilityInsideBoard = new int[12][12];
+
+    public int[][] getStabilityInsideBoard() {
+        return stabilityInsideBoard;
+    }
+
+    public void setStabilityInsideBoard(int[][] stabilityInsideBoard) {
+        this.stabilityInsideBoard = stabilityInsideBoard;
+    }
 
     public int[][] getInsideBoard() {
         return insideBoard;
@@ -15,6 +25,9 @@ public class Board {
         return ninjaBoard;
     }
 
+    /**
+     * Board constructor. Generate special edge for board (letters and number axis).
+     */
     Board() {
         for (int i = 1; i < getInsideBoard().length - 1; i++) {
             for (int j = 1; j < getInsideBoard().length - 1; j++) {
@@ -23,8 +36,6 @@ public class Board {
             }
         }
         generateShips();
-
-        String[] str = new String[]{};
         for (int i = 0; i < 11; i++) {
             getNinjaBoard()[0][i + 1] = Character.forDigit(i, 10);
         }
@@ -36,15 +47,9 @@ public class Board {
         }
     }
 
-    void showBoard() {
-        for (int i = 1; i < getInsideBoard().length - 1; i++) {
-            for (int j = 1; j < getInsideBoard().length - 1; j++) {
-                System.out.print(getInsideBoard()[i][j] + " ");
-            }
-            System.out.println(" ");
-        }
-    }
-
+    /**
+     * Display ninjaBoard for players.
+     */
     void showNinjaBoard() {
         for (int i = 0; i < getNinjaBoard().length - 1; i++) {
             for (int j = 0; j < getNinjaBoard().length - 1; j++) {
@@ -54,7 +59,15 @@ public class Board {
         }
     }
 
-    boolean isFreedom(int x, int y, int[][] brd) {
+    /**
+     * Checker for freedom cells around hypothetically ships cells.
+     *
+     * @param x   is X axis cells value
+     * @param y   is Y axis cells value
+     * @param brd board
+     * @return boolean result
+     */
+    private boolean isFreedom(int x, int y, int[][] brd) {
         int[][] field = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
         int dx, dy;
         if ((x >= 1) && (x < 11) && (y >= 1) && (y < 11) && (brd[x][y] == 0)) {
@@ -71,6 +84,13 @@ public class Board {
         }
     }
 
+    /**
+     * Method reduces the values of the cells in which the ship is located,
+     * which allows to determine the degree of damage to the ship.
+     *
+     * @param x is X axis cells value
+     * @param y is Y axis cells value
+     */
     void degradableShip(int x, int y) {
         if (getInsideBoard()[x][y] != 0) {
             getInsideBoard()[x][y]--;
@@ -119,6 +139,13 @@ public class Board {
 
     }
 
+    /**
+     * Method generate random number in input limit.
+     *
+     * @param min value of minimal number
+     * @param max value of maximal number
+     * @return number in range of min and max
+     */
     int getRandomNumberInRange(int min, int max) {
 
         if (min >= max) {
@@ -129,7 +156,10 @@ public class Board {
         return r.nextInt((max - min) + 1) + min;
     }
 
-    void generateShips() {
+    /**
+     * Methods for random ships generating.
+     */
+    private void generateShips() {
         boolean b;
         int kx, ky;
         for (int n = 3; n >= 0; n--) {
@@ -139,29 +169,38 @@ public class Board {
                     int x = getRandomNumberInRange(1, 11);
                     int y = getRandomNumberInRange(1, 11);
                     kx = random.nextInt(2);
-
                     if (kx == 0) {
                         ky = 1;
                     } else {
                         ky = 0;
                     }
                     b = true;
-
                     for (int i = 0; i <= n; i++) {
                         if (!isFreedom(x + kx * i, y + ky * i, getInsideBoard())) {
                             b = false;
                         }
                     }
-
                     if (b) {
                         for (int j = 0; j <= n; j++) {
                             getInsideBoard()[x + kx * j][y + ky * j] = n + 1;
                         }
-
                     }
-
                 } while (!b);
             }
         }
+        setStabilityInsideBoard(copyInsideArray());
+    }
+
+    /**
+     * Method for to copy matrix.
+     *
+     * @return copy of matrix
+     */
+    private int[][] copyInsideArray() {
+        int[][] arr = Arrays.copyOf(getInsideBoard(), getInsideBoard().length);
+        for (int i = 0; i < getInsideBoard().length; i++) {
+            arr[i] = Arrays.copyOf(getInsideBoard()[i], getInsideBoard()[i].length);
+        }
+        return arr;
     }
 }

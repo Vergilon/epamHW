@@ -3,85 +3,22 @@ package com.epam.BattleShip;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gamer {
-
-    private Board board;
-    private int point;
-    private String name;
-
-    public int getPoint() {
-        return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
-    String mes;
+/**
+ * Class extends standard player's class functionality
+ */
+public class Gamer extends Player {
 
     Gamer(String name) {
-        setBoard(new Board());
-        setName(name);
-        setPoint(20);
+        super(name);
     }
 
-    private void preShot(char letter, int number) {
-        int x = convertChar(letter) + 1;
-        int y = number + 1;
-        shot(x, y);
-    }
-
-    void shot(int litera, int number) {
-
-        if (!isDamage(litera, number)) {
-            mes = "Miss";
-            System.out.println(mes);
-            getBoard().getNinjaBoard()[litera][number] = 'O';
-        }
-        if (isDamage(litera, number)) {
-            getBoard().degradableShip(litera, (number));
-            if (getBoard().getInsideBoard()[litera][number] != 0) {
-                getBoard().getNinjaBoard()[litera][number] = '✖';
-                point--;
-                mes = "Damage";
-                System.out.println(mes);
-            } else {
-                getBoard().getNinjaBoard()[litera][number] = '❎';
-                point--;
-                mes = "Kill";
-                System.out.println(mes);
-            }
-        }
-    }
-
-    boolean isDamage(int x, int y) {
-        return getBoard().getInsideBoard()[x][y] != 0 && !isRepeat(x, y);
-    }
-
-    boolean isKill(int x, int y) {
-        return mes.equals("Kill") && !isRepeat(x, y);
-    }
-
-    boolean isRepeat(int a, int b) {
-        return (getBoard().getNinjaBoard()[a][b] == 'O' || getBoard().getNinjaBoard()[a][b] == '✖' || getBoard().getNinjaBoard()[a][b] == '❎');
-    }
-
+    /**
+     * Special method to convert char symbols in special integer number.
+     * If symbol isn't in switch collection, game will enter data one more time.
+     *
+     * @param symbol is character that needs to be converted
+     * @return integer number for game board
+     */
     int convertChar(char symbol) {
         List<Character> correctSymbols = new ArrayList<>();
         char[] c = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
@@ -127,18 +64,20 @@ public class Gamer {
         return convertInt;
     }
 
-    void readShot(String str) {
+    /**
+     * Main method for reading data from input stream.
+     * Method special increment input data, because this is necessary for board.
+     *
+     * @param str input string
+     * @return array containing two numbers
+     */
+    int[] readShot(String str) {
         if (str.length() == 2) {
-            char c = str.charAt(0);
-            int i = Integer.parseInt(str.substring(1));
-            preShot(c, i);
+            int c = convertChar(str.charAt(0)) + 1;
+            int i = Integer.parseInt(str.substring(1)) + 1;
+            return new int[]{c, i};
+        } else {
+            throw new IllegalArgumentException();
         }
-    }
-
-    boolean isWin() {
-        if (getPoint() == 0) {
-            System.out.println("Player " + name + " win!");
-        }
-        return getPoint() == 0;
     }
 }
