@@ -94,49 +94,31 @@ class Board {
     void degradableShip(int x, int y) {
         if (getInsideBoard()[x][y] != 0) {
             getInsideBoard()[x][y]--;
-            if (getInsideBoard()[x][y + 1] != 0) {
-                getInsideBoard()[x][y + 1]--;
-                if (getInsideBoard()[x][y + 2] != 0) {
-                    getInsideBoard()[x][y + 2]--;
-                    if (getInsideBoard()[x][y + 3] != 0) {
-                        getInsideBoard()[x][y + 3]--;
-                        return;
-                    }
+
+            for (int i = 1; i < 3; i++) {
+                if (getInsideBoard()[x][y + i] != 0) {
+                    getInsideBoard()[x][y + i]--;
                 }
-            }
-            if (getInsideBoard()[x][y - 1] != 0) {
-                getInsideBoard()[x][y - 1]--;
-                if (getInsideBoard()[x][y - 2] != 0) {
-                    getInsideBoard()[x][y - 2]--;
-                    if (getInsideBoard()[x][y - 3] != 0) {
-                        getInsideBoard()[x][y - 3]--;
-                        return;
-                    }
+                if (getInsideBoard()[x][y - i] != 0) {
+                    getInsideBoard()[x][y - i]--;
+                }
+                if (getInsideBoard()[x][y + i] == 0 && getInsideBoard()[x][y - i] == 0) {
+                    break;
                 }
             }
 
-            if (getInsideBoard()[x + 1][y] != 0) {
-                getInsideBoard()[x + 1][y]--;
-                if (getInsideBoard()[x + 2][y] != 0) {
-                    getInsideBoard()[x + 2][y]--;
-                    if (getInsideBoard()[x + 3][y] != 0) {
-                        getInsideBoard()[x + 3][y]--;
-                        return;
-                    }
+            for (int i = 1; i < 3; i++) {
+                if (getInsideBoard()[x + i][y] != 0) {
+                    getInsideBoard()[x + i][y]--;
                 }
-            }
-
-            if (getInsideBoard()[x - 1][y] != 0) {
-                getInsideBoard()[x - 1][y]--;
-                if (getInsideBoard()[x - 2][y] != 0) {
-                    getInsideBoard()[x - 2][y]--;
-                    if (getInsideBoard()[x - 3][y] != 0) {
-                        getInsideBoard()[x - 3][y]--;
-                    }
+                if (getInsideBoard()[x - i][y] != 0) {
+                    getInsideBoard()[x - i][y]--;
+                }
+                if (getInsideBoard()[x - i][y] == 0 && getInsideBoard()[x + i][y] == 0) {
+                    break;
                 }
             }
         }
-
     }
 
     /**
@@ -196,7 +178,7 @@ class Board {
      *
      * @return copy of matrix
      */
-    private int[][] copyInsideArray() {
+    int[][] copyInsideArray() {
         int[][] arr = Arrays.copyOf(getInsideBoard(), getInsideBoard().length);
         for (int i = 0; i < getInsideBoard().length; i++) {
             arr[i] = Arrays.copyOf(getInsideBoard()[i], getInsideBoard()[i].length);
